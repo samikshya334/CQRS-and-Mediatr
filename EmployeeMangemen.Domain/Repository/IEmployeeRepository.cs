@@ -12,8 +12,7 @@ namespace EmployeeMangemen.Domain.Repository
         Task<List<Employee>> GetAllEmployeesAsync();
         Task<Employee> GetByIdAsync(int id);
         Task<Employee> CreateEmployeeAsync(Employee employee);
-        Task<int> UpdateEmployeeAsync(int id , Employee employee);
-        Task<int> DeleteEmployeeAsync(int id);
-
+        Task<int> UpdateAsync(int employeeID, Employee updateEntity);
+        Task<int> DeleteAsyn(int employeeId);
     }
 }

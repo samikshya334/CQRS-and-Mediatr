@@ -1,18 +1,32 @@
-﻿using EmplyeeManagement.Application.Employee.Queries.GetEmployee;
+﻿
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using EmployeeMangemen.Domain.Repository;
+using EmplyeeManagement.Application.Employee.Commands.UpdateEmployee;
 
-namespace EmplyeeManagement.Application.Employee.Commands.UpdateEmployee
+namespace EmployeeManagement.Application.Employee.Commands.UpdateEmployee
 {
     public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeCommand, int>
     {
-        public Task<int> Handle(UpdateEmployeeCommand request, CancellationToken cancellationToken)
+        private readonly IEmployeeRepository _employeeRepository;
+
+        public UpdateEmployeeCommandHandler(IEmployeeRepository employeeRepository)
         {
-            throw new NotImplementedException();
+            _employeeRepository = employeeRepository;
+        }
+
+        public async Task<int> Handle(UpdateEmployeeCommand request, CancellationToken cancellationToken)
+        {
+            var updateEntity = new EmployeeMangemen.Domain.Entity.Employee()
+            {
+                EmployeeID = request.EmployeeID,
+                EmployeeName = request.EmployeeName,
+                EmployeeDescription = request.EmployeeDescription,
+                EmployeeAddress = request.EmployeeAddress,
+            };
+
+            return await _employeeRepository.UpdateAsync(request.EmployeeID, updateEntity);
         }
     }
 }
